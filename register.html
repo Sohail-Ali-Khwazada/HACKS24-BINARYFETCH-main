@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Auth</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0C2D57]">
+ <div class="w-[40%] md:ml-[32rem] md:mt-24 border-gray-700 border-2 p-4 hover:border-white ">
+  <h2 class="text-center text-3xl text-white my-4">Register </h2>
+  <form class="max-w-sm mx-auto " id="MainForm">
+    <div class="mb-5">
+      <label for="emailInp" class="block mb-2 text-sm font-medium text-gray-400 dark:text-white">Your email</label>
+      <input type="email" id="emailInp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Your Email">
+    </div>
+    <div class="mb-5">
+      <label for="fnameInp" class="block mb-2 text-sm font-medium text-gray-400 dark:text-white">First Name</label>
+      <input type="text" id="fnameInp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter First Name">
+    </div>
+    <div class="mb-5">
+      <label for="lnameInp" class="block mb-2 text-sm font-medium text-gray-400 dark:text-white">Last Name</label>
+      <input type="text" id="lnameInp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Last Name" >
+    </div>
+    <div class="mb-5">
+      <label for="passwordInp" class="block mb-2 text-sm font-medium text-gray-400 dark:text-white">Your password</label>
+      <input type="password" id="passwordInp" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+    </div>
+    <div class="text-center">
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
+    </div>
+  </form>
+  <div class="grid place-content-center mt-2">
+    <p class="text-xl text-white text-center mb-2">or</p>
+    <a class="text-center" href="login.html"><button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">login</button></a>
+  </div>
+ </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+    import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB-NBDHW8VGG3AMeHyaSEr6iSTyOArtjnA",
+      authDomain: "tsec-hacks-24.firebaseapp.com",
+      databaseURL: "https://tsec-hacks-24-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "tsec-hacks-24",
+      storageBucket: "tsec-hacks-24.appspot.com",
+      messagingSenderId: "392929194485",
+      appId: "1:392929194485:web:e686c8d6fb0567e1b5f0bc",   
+      databaseURL: "https://tsec-hacks-24-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app)
+    const auth = getAuth(app);
+
+    let EmailInp = document.getElementById('emailInp');
+    let PassInp = document.getElementById('passwordInp');
+    let FnameInp = document.getElementById('fnameInp');
+    let LnameInp = document.getElementById('lnameInp');
+    let MainForm = document.getElementById('MainForm');
+
+    let registerUser = (evt) => {
+      evt.preventDefault();
+      createUserWithEmailAndPassword(auth, emailInp.value, PassInp.value)
+        .then((credentials) => {
+          set(ref(db, 'UsersAuthList/' + credentials.user.uid), { //uid is automatically generated by the firebase auth
+            FirstName: fnameInp.value,
+            LastName: lnameInp.value
+          })
+          EmailInp.value = "";
+          PassInp.value = "";
+          FnameInp.value = "";
+          LnameInp.value = '';
+        })
+        .catch((err) => {
+          alert(err.message)
+          console.log(err.code);
+          console.log(err.message);
+        })
+    }
+    MainForm.addEventListener('submit', registerUser);
+  </script>
+</body>
+
+</html>

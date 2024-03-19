@@ -1,0 +1,21 @@
+.ProductCardContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 1vw;
+}
+.rounded-t-lg{
+    border-radius: 2%;
+}
+.ProductCard{
+    margin: 0.7rem 0px;
+    padding: 0;
+    overflow: hidden;
+}
+.productImg{
+    transition:transform 0.5s;
+}
+.productImg:hover{
+    transform: scale(1.08);
+}

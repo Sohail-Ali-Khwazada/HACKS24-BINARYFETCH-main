@@ -1,0 +1,57 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.comhead{
+  text-align: center;
+}
+#customdetails{
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+#customcompageholder{
+  height: auto;
+  /* background-color: #FC6736; */
+  background-color: black;
+  padding-bottom: 10rem;
+}
+#customprofileholder{
+  display: flex;
+  background-color: #0C2D57;
+  color: white;
+  border: 0.1rem solid #7a98c0;
+  border-radius: 1rem;
+  margin: 0.3rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem #7a98c0;
+}
+#customprofileimg img {
+  height: 10rem;
+  border-radius: 50%;
+}
+
+#customQNA{
+  margin: 1rem;
+}
+#custombtncontainer{
+  margin: 1rem;
+  color: white;
+  display: flex;
+  
+}
+
+#customtextQ{
+  display: none;
+  margin: 1rem;
+  
+}
+#custominputcontainer{
+  height: 2.1rem;
+  margin:0.2rem;
+  padding: 0.1rem;
+}
+#customaddQ{
+  margin-top:1rem;
+  height: 2.5rem;
+}
